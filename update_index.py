@@ -6,7 +6,7 @@ import akshare as ak
 from tqdm import tqdm
 import plotly
 import plotly.express as px
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 def get_df(look_back=63):
     temp = ak.sw_index_spot()
@@ -55,18 +55,18 @@ fig.update_traces(textposition="middle center")
 
 
 # Get current date, time and timezone to print to the html page
-now = datetime.now()
-dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-timezone_string = datetime.now().astimezone().tzname()
+beijing = timezone(timedelta(hours=8))
+time_utc = datetime.utcnow().replace(tzinfo=timezone.utc)
+time_beijing = time_utc.astimezone(beijing)
 
 # Rewrite index.html
 with open('index.html', 'a') as f:
     f.truncate(0) # clear file if something is already written on it
     title = "<h1>Market Tracking</h1>"
-    updated = "<h2>Last updated: " + dt_string + " (Timezone: " + timezone_string + ")</h2>"
-    description = "This dashboard is updated every half an hour with sentiment analysis performed on latest scraped news headlines from the FinViz website.<br><br>"
-    code = """<a href="https://medium.com/datadriveninvestor/use-github-actions-to-create-a-live-stock-sentiment-dashboard-online-580a08457650">Explanatory Article</a> | <a href="https://github.com/damianboh/dow_jones_live_stock_sentiment_treemap">Source Code</a>"""
-    author = """ | Created by nn, check out my <a href="https://chenpnn.github.io/">GitHub Page</a>"""
-    f.write(title + updated + description + code + author)
+    updated = "<h2>Last updated: " + time_beijing + " (UTC+8)</h2>"
+    description = "This dashboard is updated every half an hour with akshare.<br><br>"
+    #code = """<a href="https://medium.com/datadriveninvestor/use-github-actions-to-create-a-live-stock-sentiment-dashboard-online-580a08457650">Explanatory Article</a> | <a href="https://github.com/damianboh/dow_jones_live_stock_sentiment_treemap">Source Code</a>"""
+    author = """ Created by nn, check out my <a href="https://github.com/chenpnn/plotly">GitHub</a>"""
+    f.write(title + updated + description + author)
     f.write(fig.to_html())
     #f.write(fig.to_html(full_html=False, include_plotlyjs='cdn')) # write the fig created above into the html file
