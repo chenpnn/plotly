@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 
 import akshare as ak
-from tqdm import tqdm
 import plotly
 import plotly.express as px
 from datetime import datetime, timezone, timedelta
@@ -17,7 +16,7 @@ def get_df(look_back=63):
     for symbol, name in temp:
         symbol_name[symbol] = [name]
 
-    for symbol in tqdm(symbol_name.keys()):
+    for symbol in symbol_name.keys():
         df = ak.index_level_one_hist_sw(symbol)[['指数代码', '发布日期', '收盘指数', '平均流通市值']]
         df.columns = ['code', 'date', 'close', 'value']
         df = df.iloc[-(look_back+1):]    
@@ -57,7 +56,7 @@ fig.update_traces(textposition="middle center")
 # Get current date, time and timezone to print to the html page
 beijing = timezone(timedelta(hours=8))
 time_utc = datetime.utcnow().replace(tzinfo=timezone.utc)
-time_beijing = time_utc.astimezone(beijing)
+time_beijing = time_utc.astimezone(beijing).strftime("%Y-%m-%d %H:%M:%S")
 
 # Rewrite index.html
 with open('index.html', 'a') as f:
