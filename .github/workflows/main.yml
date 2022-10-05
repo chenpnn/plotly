@@ -2,7 +2,7 @@ name: Get Sentiment and update GitHub page
 
 on:
   schedule:
-    - cron: "*/30 * * * *" # runs every half hour
+    - cron: "*/5 * * * *" # runs every half hour
     
 jobs:
   refresh_page:
@@ -26,18 +26,18 @@ jobs:
         
       - name: Clone repo from your github.io page and commit newly generated sentiment html file
         run: | #change all the "damianboh"s below to your username
-          git clone https://github.com/damianboh/damianboh.github.io.git/ 
-          cp dow_jones_live_sentiment.html damianboh.github.io/dow_jones_live_sentiment.html 
-          cd damianboh.github.io 
-          git add dow_jones_live_sentiment.html
+          git clone https://github.com/chenpnn/plotly.git 
+          cp index.html plotly/index.html
+          cd plotly
+          git add index.html
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m 'refresh dow jones sentiment page'        
+          git commit -m 'refresh page'        
         
       - name: Push updated html to github.io page
         uses: ad-m/github-push-action@master
         with: #change all the "damianboh"s below to your username
           github_token: ${{ secrets.TOKEN }}          
-          repository: "damianboh/damianboh.github.io"
+          repository: "chenpnn/plotly"
           branch: "main"          
-          directory: ./damianboh.github.io
+          directory: ./plotly
