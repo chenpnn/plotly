@@ -1,22 +1,13 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Oct  5 21:28:46 2022
 
-@author: uest
-"""
-
-#%%
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
 
 import akshare as ak
 from tqdm import tqdm
 import plotly
 import plotly.express as px
-# import warnings
-# warnings.filterwarnings("ignore")
-#%%
+from datetime import datetime
+
 def get_df(look_back=63):
     temp = ak.sw_index_spot()
     a = list(temp['指数代码'])
@@ -44,11 +35,10 @@ def get_df(look_back=63):
     assert len(df['date'].unique()) == 1
     
     return df
-#%%
+
 LOOK_BACK = 126
 df = get_df(LOOK_BACK)
-df.head()
-#%%
+
 fig = px.treemap(data_frame=df, 
                  path=[px.Constant('申万一级行业指数'), 'name'], 
                  values='value',
@@ -62,15 +52,17 @@ fig = px.treemap(data_frame=df,
 fig.data[0].texttemplate = '%{label}<br>%{customdata[0]}'
 fig.update_traces(textposition="middle center")
 
-# fig.update_traces(textinfo='label+text',textfont = dict(size = 12))
-# plotly.offline.plot(fig, filename='index_return.html') 
-# fig.show()
-#%%
-dt_string = 'temp1'
-timezone_string = 'temp2'
+
+
+# Get current date, time and timezone to print to the html page
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+timezone_string = datetime.now().astimezone().tzname()
+
+# Rewrite index.html
 with open('index.html', 'a') as f:
     f.truncate(0) # clear file if something is already written on it
-    title = "<h1>申万一级行业</h1>"
+    title = "<h1>Market Tracking</h1>"
     updated = "<h2>Last updated: " + dt_string + " (Timezone: " + timezone_string + ")</h2>"
     description = "This dashboard is updated every half an hour with sentiment analysis performed on latest scraped news headlines from the FinViz website.<br><br>"
     code = """<a href="https://medium.com/datadriveninvestor/use-github-actions-to-create-a-live-stock-sentiment-dashboard-online-580a08457650">Explanatory Article</a> | <a href="https://github.com/damianboh/dow_jones_live_stock_sentiment_treemap">Source Code</a>"""
