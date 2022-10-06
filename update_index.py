@@ -35,7 +35,7 @@ def get_df(look_back=63):
     
     return df
 
-LOOK_BACK = 126
+LOOK_BACK = 63
 df = get_df(LOOK_BACK)
 
 fig = px.treemap(data_frame=df, 
