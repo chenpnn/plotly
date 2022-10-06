@@ -1,3 +1,3 @@
 # ploty
 ## automate
-This site is live at https://chenpnn.github.io/plotly/
+This site is live at [here](http://xiaoxiangyeyu.site/plotly/).
