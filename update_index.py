@@ -39,7 +39,7 @@ LOOK_BACK = 63
 df = get_df(LOOK_BACK)
 
 fig = px.treemap(data_frame=df, 
-                 path=[px.Constant('申万一级行业指数'), 'name'], 
+                 path=[px.Constant('申万一级行业指数近{}个交易日涨幅'.format(LOOK_BACK), 'name'], 
                  values='value',
                  color='return', 
                  # hover_data=['return', 'return_display'],
