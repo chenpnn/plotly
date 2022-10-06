@@ -64,5 +64,5 @@ with open('index.html', 'a') as f:
     title = "<h1 align=\"center\">Market Tracking</h1>"
     description = "<h3 align=\"center\">Last update: " + time_beijing + " (UTC+8). By <a href=\"https://github.com/chenpnn/plotly\">N.N.</a></h3>"
     f.write(title + description)
-    f.write(fig.to_html())
-    #f.write(fig.to_html(full_html=False, include_plotlyjs='cdn')) # write the fig created above into the html file
+    #f.write(fig.to_html())
+    f.write(fig.to_html(full_html=False, include_plotlyjs='cdn')) # write the fig created above into the html file
