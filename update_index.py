@@ -61,11 +61,8 @@ time_beijing = time_utc.astimezone(beijing).strftime("%Y-%m-%d %H:%M:%S")
 # Rewrite index.html
 with open('index.html', 'a') as f:
     f.truncate(0) # clear file if something is already written on it
-    title = "<h1>Market Tracking</h1>"
-    updated = "<h2>Last updated: " + time_beijing + " (UTC+8)</h2>"
-    description = "This dashboard is updated every half an hour with akshare.<br><br>"
-    #code = """<a href="https://medium.com/datadriveninvestor/use-github-actions-to-create-a-live-stock-sentiment-dashboard-online-580a08457650">Explanatory Article</a> | <a href="https://github.com/damianboh/dow_jones_live_stock_sentiment_treemap">Source Code</a>"""
-    author = """ Created by nn, check out my <a href="https://github.com/chenpnn/plotly">GitHub</a>"""
-    f.write(title + updated + description + author)
+    title = "<h1 align=\"center\">Market Tracking</h1>"
+    description = "<h3 align=\"center\">Last update: " + time_beijing + " (UTC+8). By <a href=\"https://github.com/chenpnn/plotly\">N.N.</a></h3>"
+    f.write(title + description)
     f.write(fig.to_html())
     #f.write(fig.to_html(full_html=False, include_plotlyjs='cdn')) # write the fig created above into the html file
