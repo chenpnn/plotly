@@ -1,2 +1,2 @@
 # ploty
-This site is live [here](http://xiaoxiangyeyu.site/plotly/).
+This site is live [here](http://chenpnn.github.io/plotly/).
